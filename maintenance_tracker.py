@@ -1,6 +1,8 @@
-#Maintenance tracker to maintain updated info regarding equipment status
+#Equipment Maintenance Tracker
+
 
 import json
+#Able to create a save data
 
 equipment_list = []
 
@@ -83,6 +85,29 @@ def update_status():
     print("No equipment found with that serial number.")
 
 
+def delete_equipment():
+    serial = input("Enter serial number to delete: ")
+
+    for equipment in equipment_list:
+        if equipment["serial_number"] == serial:
+            equipment_list.remove(equipment)
+            save_data()
+            print("Equipment deleted.")
+            return
+
+    print("Equipment not found.")
+
+
+def view_upcoming_maintenance():
+    print("\nUpcoming Maintenance:")
+
+    for equipment in equipment_list:
+        print(
+            f"{equipment['name']} - "
+            f"Next Maintenance: {equipment['next_maintenance']}"
+        )
+
+
 def main_menu():
     while True:
         print("\n--- Military Equipment Maintenance Tracker ---")
@@ -90,7 +115,9 @@ def main_menu():
         print("2. View All Equipment")
         print("3. Search Equipment")
         print("4. Update Equipment Status")
-        print("5. Exit")
+        print("5. Delete Equipment")
+        print("6. View Upcoming Maintenance")
+        print("7. Exit")
 
         choice = input("Choose an option: ")
 
@@ -103,6 +130,10 @@ def main_menu():
         elif choice == "4":
             update_status()
         elif choice == "5":
+            delete_equipment()
+        elif choice == "6":
+            view_upcoming_maintenance()
+        elif choice == "7":
             print("Exiting program. Goodbye!")
             break
         else:
